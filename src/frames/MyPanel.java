@@ -4,6 +4,7 @@ package frames;
 import setup.Sorter;
 import sorting.Sorting;
 
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -27,11 +28,16 @@ public class MyPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g.create();
+        Graphics2D g2d = (Graphics2D) g;
+        Graphics2D graphics2D = g2d;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(new Color(255,215,0));
-        g2d.setFont(new Font("Arial", 0, 18));
-        g2d.drawString("Comparisons = " + Integer.toString(Sorting.count), 0, 25);
+        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+        graphics2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.setFont(new Font("Trebuchet MS", 0, 18));
+        graphics2D.drawString("Comparisons = " + Integer.toString(Sorting.count), 0, 25);
+        graphics2D.drawString("Array accesses = "+ Integer.toString(Sorting.arrayAccesses),250,25);
         int values[] = getSorter().getValues();
         int width = getWidth() - 1;
         int height = getHeight() - 1;
@@ -41,11 +47,11 @@ public class MyPanel extends JPanel {
         Color highlight = null;
         switch (getSorter().getState()) {
             case Sorting:
-                fill = new Color(178,34,34);
-                highlight = Color.WHITE;
+                fill = new Color(0,191,255);
+                highlight =new Color(128, 0, 128);
                 break;
             case Done:
-                fill = new Color(0,128,0);
+                fill = new Color(34,139,37);
                 break;
         }
         for (int index = 0; index < values.length; index++) {

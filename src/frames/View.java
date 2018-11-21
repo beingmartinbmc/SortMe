@@ -5,11 +5,6 @@ import sorting.*;
 import javax.swing.*;
 import java.awt.*;
 
-@interface Author{
-    String name();
-    String date();
-}
-
 @Author(name="Ankit Sharma",date="July 05 2018")
 public class View {
     private static JFrame frame;
