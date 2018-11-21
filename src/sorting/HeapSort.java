@@ -8,6 +8,8 @@ import javax.swing.*;
 public class HeapSort extends Implementation {
     public HeapSort(int[] values) {
         super(values);
+        Sorting.count = 0;
+        Sorting.arrayAccesses = 0;
     }
 
     @Override
@@ -22,6 +24,7 @@ public class HeapSort extends Implementation {
         int x = anArrayOfInt[i];
         anArrayOfInt[i] = anArrayOfInt[j];
         anArrayOfInt[j] = x;
+        Sorting.count++;
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
                 @Override
@@ -43,11 +46,12 @@ public class HeapSort extends Implementation {
                 ++j;
             while (j<=r && x<=anArrayOfInt[j]) {
                 swap(anArrayOfInt, i, j);
-                Sorting.count++;
+                Sorting.arrayAccesses++;
                 i = j; j = 2*j;
                 if (j<r && anArrayOfInt[j]<anArrayOfInt[j+1])
                     ++j;
             }
+            Sorting.arrayAccesses++;
         }
         private void heapSort(int[] anArrayOfInt) {
             int r = anArrayOfInt.length-1;

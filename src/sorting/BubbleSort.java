@@ -4,46 +4,56 @@ import setup.Implementation;
 import setup.State;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 
 public class BubbleSort extends Implementation {
-
-    private int outer = 0;
-    private int inner = 0;
     public BubbleSort(int[] values) {
         super(values);
+        Sorting.arrayAccesses=0;
+        Sorting.count=0;
     }
 
     @Override
     public void sort() {
         setState(State.Sorting);
-        outer = 0;
-        inner = 1;
-        Timer timer = new Timer(0, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int[] values = getValues();
-                inner++;
-                if (inner >= values.length - outer) {
-                    outer++;
-                    inner = 1;
-                }
+        new Thread(new MyThread()).start();
+    }
 
-                if (outer < values.length) {
-                    if (values[inner - 1] > values[inner]) {
-                        swap(values, inner - 1, inner);
-                        Sorting.count++;
-                    } else {
-                        setActiveIndices(inner - 1, inner);
+    @Override
+    public void swap(int[] anArrayOfInt, int i, int j) {
+        setActiveIndices(i, j);
+        int x = anArrayOfInt[i];
+        anArrayOfInt[i] = anArrayOfInt[j];
+        anArrayOfInt[j] = x;
+        Sorting.count++;
+        try {
+            SwingUtilities.invokeAndWait(new Thread() {
+                @Override
+                public void run() {
+                    fireStateChanged();
+                }
+            });
+        } catch (InterruptedException | InvocationTargetException exp) {
+            exp.printStackTrace();
+        }
+    }
+    private class MyThread implements Runnable {
+        private void bubbleSort(int[] anArrayOfInt){
+            for (int i = 0; i < anArrayOfInt.length; ++i) {
+                for (int j = 1; j < anArrayOfInt.length - i; ++j) {
+                    Sorting.arrayAccesses++;
+                    if (anArrayOfInt[j - 1] > anArrayOfInt[j]) {
+                        swap(anArrayOfInt, j - 1, j);
                     }
-                } else {
-                    ((Timer)e.getSource()).stop();
-                    setState(State.Done);
                 }
             }
-        });
-        timer.setRepeats(true);
-        timer.start();
+        }
+        @Override
+        public void run() {
+            int[] values = getValues();
+            try{bubbleSort(values);}
+            catch (Exception h){h.printStackTrace();}
+            SwingUtilities.invokeLater(()-> fireStateChanged());
+        }
     }
 }

@@ -4,10 +4,15 @@ import setup.Implementation;
 import setup.State;
 
 import javax.swing.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MergeSort extends Implementation {
+
     public MergeSort(int[] values) {
         super(values);
+        Sorting.count = 0;
+        Sorting.arrayAccesses = 0;
     }
 
     @Override
@@ -22,14 +27,20 @@ public class MergeSort extends Implementation {
         int x = anArrayOfInt[i];
         anArrayOfInt[i] = anArrayOfInt[j];
         anArrayOfInt[j] = x;
-        try {
-            SwingUtilities.invokeAndWait(new Thread() {
-                @Override
-                public void run() {
-                    fireStateChanged();
-                }
+        Sorting.count++;
+        try{
+            java.util.Timer timer = new Timer();
+            SwingUtilities.invokeAndWait(()->{
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        fireStateChanged();
+                    }
+                }, 3);
             });
-        } catch (Exception h) {
+        }
+        catch (Exception H){
+            H.getMessage();
         }
     }
     private class MyThread implements Runnable {
@@ -58,6 +69,7 @@ public class MergeSort extends Implementation {
             int i = l;
             int j = r;
             for (int k=l; k<r;k++) {
+                Sorting.arrayAccesses++;
                 int s = B[0][i];
                 int t = B[0][j];
                 if (anArrayOfInt[s]<=anArrayOfInt[t]) {
@@ -67,7 +79,7 @@ public class MergeSort extends Implementation {
                     j--;
                 }
                 swap(anArrayOfInt, s, k);
-                Sorting.count++;
+                Sorting.arrayAccesses++;
                 t = B[1][k];
                 B[0][t] = s;
                 B[1][s] = t;

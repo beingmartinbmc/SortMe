@@ -5,10 +5,14 @@ import setup.State;
 
 import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SelectionSort extends Implementation {
     public SelectionSort(int[] values) {
         super(values);
+        Sorting.count = 0;
+        Sorting.arrayAccesses = 0;
     }
 
     @Override
@@ -23,12 +27,16 @@ public class SelectionSort extends Implementation {
         int x = anArrayOfInt[i];
         anArrayOfInt[i] = anArrayOfInt[j];
         anArrayOfInt[j] = x;
+        Sorting.count += 1;
         try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                @Override
-                public void run() {
-                    fireStateChanged();
-                }
+            Timer timer = new Timer();
+            SwingUtilities.invokeAndWait(()->{
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        fireStateChanged();
+                    }
+                }, 2);
             });
         } catch (InterruptedException | InvocationTargetException exp) {
             exp.printStackTrace();
@@ -37,11 +45,12 @@ public class SelectionSort extends Implementation {
     private class MyThread implements Runnable {
         private void selectionSort(int[] anArrayOfInt) {
             for (int i = 0; i < anArrayOfInt.length - 1; ++i) {
-                for (int j = i + 1; j < anArrayOfInt.length; ++j)
+                for (int j = i + 1; j < anArrayOfInt.length; ++j) {
                     if (anArrayOfInt[j] < anArrayOfInt[i]) {
                         swap(anArrayOfInt, i, j);
-                        Sorting.count++;
                     }
+                    Sorting.arrayAccesses++;
+                }
             }
         }
         @Override

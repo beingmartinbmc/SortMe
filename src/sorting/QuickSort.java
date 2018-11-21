@@ -8,6 +8,8 @@ import javax.swing.*;
 public class QuickSort extends Implementation {
     public QuickSort(int[] values) {
         super(values);
+        Sorting.count = 0;
+        Sorting.arrayAccesses = 0;
     }
 
     @Override
@@ -21,6 +23,7 @@ public class QuickSort extends Implementation {
         int x = anArrayOfInt[i];
         anArrayOfInt[i] = anArrayOfInt[j];
         anArrayOfInt[j] = x;
+        Sorting.count++;
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
                 @Override
@@ -33,17 +36,17 @@ public class QuickSort extends Implementation {
         }
     }
     private class MyThread implements Runnable {
-        private void qSort(int[] anArrayOfInt, int l, int r)throws InterruptedException {
+        private void qSort(int[] anArrayOfInt, int l, int r){
             if (l >= r)
                 return;
             swap(anArrayOfInt, l, (l+r)/2);
             int last = l;
-            for (int i=l+1; i<=r; ++i)
+            for (int i=l+1; i<=r; ++i) {
                 if (anArrayOfInt[i] < anArrayOfInt[l]) {
                     swap(anArrayOfInt, ++last, i);
-                    Sorting.count++;
                 }
-            Thread.sleep(5);
+                Sorting.arrayAccesses++;
+            }
             swap(anArrayOfInt, l, last);
             qSort(anArrayOfInt, l, last-1);
             qSort(anArrayOfInt, last+1, r);
@@ -51,8 +54,7 @@ public class QuickSort extends Implementation {
         @Override
         public void run() {
             int[] values = getValues();
-            try{qSort(values,0,values.length-1);}
-            catch (InterruptedException e){e.printStackTrace();}
+            qSort(values,0,values.length-1);
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
