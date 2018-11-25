@@ -29,16 +29,15 @@ public class MyPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        Graphics2D graphics2D = g2d;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
-        graphics2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        graphics2D.setColor(Color.WHITE);
-        graphics2D.setFont(new Font("Trebuchet MS", 0, 18));
-        graphics2D.drawString("Comparisons = " + Integer.toString(Sorting.count), 0, 25);
-        graphics2D.drawString("Array accesses = "+ Integer.toString(Sorting.arrayAccesses),250,25);
-        int values[] = getSorter().getValues();
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Trebuchet MS", 0, 18));
+        g2d.drawString("Comparisons = " + Sorting.count, 0, 25);
+        g2d.drawString("Array accesses = "+ Sorting.arrayAccesses,250,25);
+        int [] values = getSorter().getValues();
         int width = getWidth() - 1;
         int height = getHeight() - 1;
         int colWidth = Math.round((float) width / (float) values.length);
