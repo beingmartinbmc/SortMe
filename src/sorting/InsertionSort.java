@@ -28,7 +28,7 @@ public class InsertionSort extends Implementation {
         anArrayOfInt[j] = x;
         Sorting.count = Sorting.count + 1;
         try {
-            java.util.Timer timer = new Timer();
+            Timer timer = new Timer();
             SwingUtilities.invokeAndWait(()-> {
                 timer.schedule(new TimerTask() {
                     @Override

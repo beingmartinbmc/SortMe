@@ -71,7 +71,7 @@ public class MyPanel extends JPanel {
         return sorter;
     }
 
-    void setSorter(Sorter value) {
+    public void setSorter(Sorter value) {
         if (sorter != value) {
             if (sorter != null) {
                 sorter.removeChangeListener(getChangeHandler());

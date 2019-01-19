@@ -29,7 +29,7 @@ public class MergeSort extends Implementation {
         anArrayOfInt[j] = x;
         Sorting.count++;
         try{
-            java.util.Timer timer = new Timer();
+            Timer timer = new Timer();
             SwingUtilities.invokeAndWait(()->{
                 timer.schedule(new TimerTask() {
                     @Override
