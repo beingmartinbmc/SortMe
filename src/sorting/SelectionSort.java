@@ -57,12 +57,7 @@ public class SelectionSort extends Implementation {
         public void run() {
             int[] values = getValues();
             selectionSort(values);
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    setState(State.Done);
-                }
-            });
+            SwingUtilities.invokeLater(() -> setState(State.Done));
         }
     }
 }

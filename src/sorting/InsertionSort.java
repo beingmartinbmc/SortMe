@@ -52,12 +52,7 @@ public class InsertionSort extends Implementation {
                 }
                 Sorting.arrayAccesses++;
             }
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    setState(State.Done);
-                }
-            });
+            SwingUtilities.invokeLater(() -> setState(State.Done));
         }
     }
 }

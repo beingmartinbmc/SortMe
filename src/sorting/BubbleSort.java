@@ -45,7 +45,7 @@ public class BubbleSort extends Implementation {
     private class MyThread implements Runnable {
         private void bubbleSort(int[] arr) {
             int n = arr.length;
-            int i, j, temp;
+            int i, j;
             boolean swapped;
             for (i = 0; i < n - 1; i++) {
                 swapped = false;
@@ -65,12 +65,7 @@ public class BubbleSort extends Implementation {
         public void run() {
             int[] values = getValues();
             bubbleSort(values);
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    setState(State.Done);
-                }
-            });
+            SwingUtilities.invokeLater(() -> setState(State.Done));
         }
     }
 }

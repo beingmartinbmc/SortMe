@@ -90,12 +90,7 @@ public class MergeSort extends Implementation {
             int[] values = getValues();
             try{mergeSort(values,0,values.length-1);}
             catch (Exception e){e.printStackTrace();}
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    setState(State.Done);
-                }
-            });
+            SwingUtilities.invokeLater(() -> setState(State.Done));
         }
     }
 }

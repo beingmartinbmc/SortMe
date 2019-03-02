@@ -25,42 +25,44 @@ public class QuickSort extends Implementation {
         anArrayOfInt[j] = x;
         Sorting.count++;
         try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                @Override
-                public void run() {
-                    fireStateChanged();
-                }
-            });
+            SwingUtilities.invokeAndWait(() ->
+                fireStateChanged()
+            );
         } catch (Exception exp) {
-            exp.getMessage();
+            exp.printStackTrace();
         }
     }
     private class MyThread implements Runnable {
-        private void qSort(int[] anArrayOfInt, int l, int r){
-            if (l >= r)
-                return;
-            swap(anArrayOfInt, l, (l+r)/2);
-            int last = l;
-            for (int i=l+1; i<=r; ++i) {
-                if (anArrayOfInt[i] < anArrayOfInt[l]) {
-                    swap(anArrayOfInt, ++last, i);
+        private int getRandom(int upper, int lower){
+            return (int)(Math.random() * (upper - lower + 1)) + lower;
+        }
+        private int partition(int[] a, int start, int end, int pIndex){
+            int pivot = a[pIndex];
+            swap(a, pIndex, end);
+            int i = start - 1;
+            for(int j = start; j <= end - 1; j++){
+                Sorting.arrayAccesses ++;
+                if(a[j] < pivot){
+                    i += 1;
+                    swap(a, i, j);
                 }
-                Sorting.arrayAccesses++;
             }
-            swap(anArrayOfInt, l, last);
-            qSort(anArrayOfInt, l, last-1);
-            qSort(anArrayOfInt, last+1, r);
+            swap(a, i + 1, end);
+            return i + 1;
+        }
+        private void qSort(int[] a, int l, int r){
+            if(l < r){
+                int pIndex = getRandom(l, r);
+                int pivot = partition(a, l, r, pIndex);
+                qSort(a, l, pivot - 1);
+                qSort(a, pivot + 1, r);
+            }
         }
         @Override
         public void run() {
             int[] values = getValues();
             qSort(values,0,values.length-1);
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    setState(State.Done);
-                }
-            });
+            SwingUtilities.invokeLater(() -> setState(State.Done));
         }
     }
 }
