@@ -4,8 +4,7 @@ import setup.Implementation;
 import setup.State;
 
 import javax.swing.*;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class InsertionSort extends Implementation {
     public InsertionSort(int[] values) {
@@ -22,24 +21,8 @@ public class InsertionSort extends Implementation {
 
     @Override
     public void swap(int[] anArrayOfInt, int i, int j) {
-        setActiveIndices(i, j);
-        int x = anArrayOfInt[i];
-        anArrayOfInt[i] = anArrayOfInt[j];
-        anArrayOfInt[j] = x;
-        Sorting.count = Sorting.count + 1;
-        try {
-            Timer timer = new Timer();
-            SwingUtilities.invokeAndWait(()-> {
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        fireStateChanged();
-                    }
-                }, 0);
-            });
-        } catch (Exception exp) {
-            System.out.println(exp);
-        }
+        super.swap(anArrayOfInt, i, j);
+        fireWhileSwapping();
     }
     private class MyThread implements Runnable {
         @Override

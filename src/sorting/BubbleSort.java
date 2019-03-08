@@ -4,9 +4,6 @@ import setup.Implementation;
 import setup.State;
 
 import javax.swing.*;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class BubbleSort extends Implementation {
     public BubbleSort(int[] values) {
@@ -23,24 +20,8 @@ public class BubbleSort extends Implementation {
 
     @Override
     public void swap(int[] anArrayOfInt, int i, int j) {
-        setActiveIndices(i, j);
-        int x = anArrayOfInt[i];
-        anArrayOfInt[i] = anArrayOfInt[j];
-        anArrayOfInt[j] = x;
-        Sorting.count += 1;
-        try {
-            Timer timer = new Timer();
-            SwingUtilities.invokeAndWait(()->{
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        fireStateChanged();
-                    }
-                }, 2);
-            });
-        } catch (InterruptedException | InvocationTargetException exp) {
-            exp.printStackTrace();
-        }
+        super.swap(anArrayOfInt, i, j);
+        fireWhileSwapping();
     }
     private class MyThread implements Runnable {
         private void bubbleSort(int[] arr) {

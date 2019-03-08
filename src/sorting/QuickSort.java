@@ -19,18 +19,8 @@ public class QuickSort extends Implementation {
     }
     @Override
     public void swap(int[] anArrayOfInt, int i, int j) {
-        setActiveIndices(i, j);
-        int x = anArrayOfInt[i];
-        anArrayOfInt[i] = anArrayOfInt[j];
-        anArrayOfInt[j] = x;
-        Sorting.count++;
-        try {
-            SwingUtilities.invokeAndWait(() ->
-                fireStateChanged()
-            );
-        } catch (Exception exp) {
-            exp.printStackTrace();
-        }
+        super.swap(anArrayOfInt, i, j);
+        fireWhileSwapping();
     }
     private class MyThread implements Runnable {
         private int getRandom(int upper, int lower){

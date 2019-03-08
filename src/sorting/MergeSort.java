@@ -4,8 +4,7 @@ import setup.Implementation;
 import setup.State;
 
 import javax.swing.*;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class MergeSort extends Implementation {
 
@@ -23,25 +22,8 @@ public class MergeSort extends Implementation {
 
     @Override
     public void swap(int[] anArrayOfInt, int i, int j) {
-        setActiveIndices(i, j);
-        int x = anArrayOfInt[i];
-        anArrayOfInt[i] = anArrayOfInt[j];
-        anArrayOfInt[j] = x;
-        Sorting.count++;
-        try{
-            Timer timer = new Timer();
-            SwingUtilities.invokeAndWait(()->{
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        fireStateChanged();
-                    }
-                }, 3);
-            });
-        }
-        catch (Exception H){
-            H.getMessage();
-        }
+        super.swap(anArrayOfInt, i, j);
+        fireWhileSwapping();
     }
     private class MyThread implements Runnable {
         private void mergeSort(int[] anArrayOfInt, int l, int r) {

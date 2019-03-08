@@ -96,9 +96,14 @@ public class Visualiser {
         frame.setVisible(true);
         JOptionPane.showMessageDialog(frame, "This is a sorting visualisation created by Ankit Sharma.\n");
         length = JOptionPane.showInputDialog(frame, "Enter number of array elements[10 - 700].\nDefault elements are 270");
-        while (Integer.parseInt(length) > 700) {
-            JOptionPane.showMessageDialog(frame, "Please choose the number in the given limit!");
-            length = JOptionPane.showInputDialog(frame, "Enter number of array elements[10 - 700].\nDefault elements are 270");
+        try {
+            while (Integer.parseInt(length) > 700 || Integer.parseInt(length) < 0) {
+                JOptionPane.showMessageDialog(frame, "Please choose the number in the given limit!");
+                length = JOptionPane.showInputDialog(frame, "Enter number of array elements[10 - 700].\nDefault elements are 270");
+            }
+        }
+        catch (NumberFormatException p){
+            p.getStackTrace();
         }
     }
 
