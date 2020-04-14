@@ -7,6 +7,7 @@ import javax.swing.*;
 
 
 public class InsertionSort extends Implementation {
+
     public InsertionSort(int[] values) {
         super(values);
         Sorting.count = 0;
@@ -24,6 +25,7 @@ public class InsertionSort extends Implementation {
         super.swap(anArrayOfInt, i, j);
         fireWhileSwapping();
     }
+
     private class MyThread implements Runnable {
         @Override
         public void run() {

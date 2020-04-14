@@ -1,6 +1,7 @@
 package frames;
 
-public @interface Author{
+public @interface Author {
     String name();
+
     String date();
 }

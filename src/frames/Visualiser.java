@@ -5,10 +5,12 @@ import sorting.*;
 import javax.swing.*;
 import java.awt.*;
 
-@Author(name="Ankit Sharma",date="July 05 2018")
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+
+@Author(name = "Ankit Sharma", date = "July 05 2018")
 public class Visualiser {
-    private JFrame frame;
     public static String length;
+    private JFrame frame;
 
     private Visualiser() {
         JPanel panel;
@@ -101,24 +103,23 @@ public class Visualiser {
                 JOptionPane.showMessageDialog(frame, "Please choose the number in the given limit!");
                 length = JOptionPane.showInputDialog(frame, "Enter number of array elements[10 - 700].\nDefault elements are 270");
             }
-        }
-        catch (NumberFormatException p){
+        } catch (NumberFormatException p) {
             p.getStackTrace();
         }
     }
 
-    private JFrame returnFrame(JPanel panel){
-        JFrame frame;
-        frame = new JFrame("Sorting");
-        frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
+    public static void main(String... s) {
+        new Visualiser();
+    }
+
+    private JFrame returnFrame(JPanel panel) {
+        JFrame frame = new JFrame("Sorting");
+        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.add(panel);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         return frame;
-    }
-    public static void main(String ...s){
-        new Visualiser();
     }
 }

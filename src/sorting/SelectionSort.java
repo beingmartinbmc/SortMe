@@ -6,6 +6,7 @@ import setup.State;
 import javax.swing.*;
 
 public class SelectionSort extends Implementation {
+
     public SelectionSort(int[] values) {
         super(values);
         Sorting.count = 0;
@@ -23,6 +24,7 @@ public class SelectionSort extends Implementation {
         super.swap(anArrayOfInt, i, j);
         fireWhileSwapping();
     }
+
     private class MyThread implements Runnable {
         private void selectionSort(int[] anArrayOfInt) {
             for (int i = 0; i < anArrayOfInt.length - 1; ++i) {
@@ -34,6 +36,7 @@ public class SelectionSort extends Implementation {
                 }
             }
         }
+
         @Override
         public void run() {
             int[] values = getValues();

@@ -52,26 +52,22 @@ public abstract class Implementation implements Sorter {
     }
 
     public void fireStateChanged() {
-        if (listeners.size() > 0) {
+        if (!listeners.isEmpty()) {
             ChangeEvent evt = new ChangeEvent(this);
-            for (ChangeListener listener : listeners) {
-                listener.stateChanged(evt);
-            }
+            listeners.forEach(listener -> listener.stateChanged(evt));
         }
     }
 
-    protected void fireWhileSwapping(){
+    protected void fireWhileSwapping() {
         Sorting.count += 1;
         try {
             Timer timer = new Timer();
-            SwingUtilities.invokeAndWait(()->{
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        fireStateChanged();
-                    }
-                }, 0);
-            });
+            SwingUtilities.invokeAndWait(() -> timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    fireStateChanged();
+                }
+            }, 0));
         } catch (InterruptedException | InvocationTargetException exp) {
             exp.printStackTrace();
         }
